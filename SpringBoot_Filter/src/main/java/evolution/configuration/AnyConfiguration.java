@@ -3,6 +3,7 @@ package evolution.configuration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import evolution.filter.AnotherFilter;
 import evolution.filter.AnyFilter;
@@ -28,6 +29,18 @@ public class AnyConfiguration {
 	    registration.addInitParameter("anyName", "anyValue");
 	    registration.setName("anotherFileter");
 	    registration.setOrder(2);
+	    return registration;
+	} 
+	
+	@Bean
+	public FilterRegistrationBean characterEncodingFilter() {
+	    FilterRegistrationBean registration = new FilterRegistrationBean();
+	    registration.setName("characterEncodingFilter");
+	    registration.setFilter(new CharacterEncodingFilter());
+	    registration.addInitParameter("encoding", "UTF-8");
+	    registration.addInitParameter("forceEncoding", "true");
+	    registration.addUrlPatterns("/*");
+	    registration.setOrder(0);
 	    return registration;
 	} 
 }
